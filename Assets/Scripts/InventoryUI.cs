@@ -28,8 +28,7 @@ public class InventoryUI : MonoBehaviour
 
     private void DrawItem(PlayerItem playerItem, Transform parent, Vector3 position)
     {
-        var itemDetails = DataLoader.Instance.GetItemById(playerItem.ItemId);
-        Sprite image = ColorManager.Instance.GetItemImageTypeByType(itemDetails.Type);
+        Sprite image = ColorManager.Instance.GetItemImageTypeByType(playerItem.Item.Type);
 
         var rarityColor = ColorManager.Instance.GetColorByRarity(playerItem.Rarity);
 

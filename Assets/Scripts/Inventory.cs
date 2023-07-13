@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     public int columns = 5;
 
     private ListWrapperJSON<PlayerItemJSON> playerItemList;
+
     private void Awake()
     {
         equippedItems = new List<PlayerItem>();
@@ -19,13 +20,8 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         FillInventoryWithPlayerItems(playerItemList);
-        ItemUI[] itemDetailsUIs = FindObjectsOfType<ItemUI>();
-        foreach (ItemUI itemDetailsUI in itemDetailsUIs)
-        {
-            itemDetailsUI.OnItemClick += HandleItemClick;
-            Debug.Log("test");
-        }
     }
+
     public void HandleItemClick(PlayerItem playerItem)
     {
         ToggleItemEquip(playerItem);
@@ -44,10 +40,12 @@ public class Inventory : MonoBehaviour
             var ItemId = playerItemJSON.ItemId;
             var Rarity = playerItemJSON.Rarity;
             var Effects = playerItemJSON.Effects;
+
             foreach (var effect in Effects)
             {
                 effect.ItemEffect = DataLoader.Instance.GetEffectById(effect.EffectId);
             }
+
             var Item = DataLoader.Instance.GetItemById(ItemId);
 
             this.playerItems[i, j] = new PlayerItem(ItemId, Item, Rarity, Effects);
@@ -121,6 +119,12 @@ public class Inventory : MonoBehaviour
             Debug.LogWarning("Przedmiot jest ju¿ za³o¿ony!");
             return false;
         }
+
+        if (IsTypeEquiped(item.Item.Type))
+        {
+            Debug.LogWarning("Przedmiot tego typu jest ju¿ za³o¿ony!");
+            return false;
+        }
         
         switch (item.Item.Type)
         {
@@ -174,6 +178,18 @@ public class Inventory : MonoBehaviour
         return equippedItems.Contains(item);
     }
 
+    public bool IsTypeEquiped(ItemType type)
+    {
+        foreach (var item in equippedItems)
+        {
+            if (item.Item.Type == type)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<PlayerItem> GetEquippedItems()
     {
         return equippedItems;
@@ -198,5 +214,4 @@ public class Inventory : MonoBehaviour
             Debug.LogError("Player items file not found: " + file);
         }
     }
-
 }

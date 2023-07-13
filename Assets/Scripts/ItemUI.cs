@@ -59,7 +59,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         detailsWindow.transform.position = new Vector3(0, detailsWindow.transform.position.y, detailsWindow.transform.position.z);
 
-        var itemDetails = DataLoader.Instance.GetItemById(playerItem.ItemId);
+        var itemDetails = playerItem.Item;
 
         var rarityColor = ColorManager.Instance.GetColorByRarity(playerItem.Rarity);
         var itemTypeIcon = ColorManager.Instance.GetItemImageTypeByType(itemDetails.Type);

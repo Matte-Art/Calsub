@@ -15,6 +15,12 @@
         {"EffectId":2,"EffectValue":50.0},
         {"EffectId":3,"EffectValue":30.0},
         {"EffectId":4,"EffectValue":957.0}
+    ]},
+        {"ItemId":12,"Rarity":2,"Effects":[
+        {"EffectId":6,"EffectValue":55555.0},
+        {"EffectId":7,"EffectValue":544.0},
+        {"EffectId":8,"EffectValue":60.0},
+        {"EffectId":9,"EffectValue":92.0}
     ]}
   ]
 }
