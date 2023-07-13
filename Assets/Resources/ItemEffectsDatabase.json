@@ -1,0 +1,95 @@
+{
+    "list":[
+  {
+    "Id": 1,
+    "effectName": "Round Time",
+    "description": "Increases time limit of every new round.",
+    "minValue": 1,
+    "maxValue": 10
+  },
+  {
+    "Id": 2,
+    "effectName": "Extra Time",
+    "description": "Increases the extra time limit by X.",
+    "minValue": 5,
+    "maxValue": 30
+  },
+  {
+    "Id": 3,
+    "effectName": "Answer Speed",
+    "description": "Increases the time for a quick response (the time during which you can get the Extra Time bonus).",
+    "minValue": 0.5,
+    "maxValue": 5
+  },
+  {
+    "Id": 4,
+    "effectName": "Time Stop",
+    "description": "Stops the time after every 10 good answers.",
+    "minValue": 10,
+    "maxValue": 5
+  },
+  {
+    "Id": 5,
+    "effectName": "Damage Idle",
+    "description": "Damage dealing while in Idle.",
+    "minValue": 1,
+    "maxValue": 100
+  },
+  {
+    "Id": 6,
+    "effectName": "Damage Multiplier",
+    "description": "Increases the damage after correct answer. Multiplies correct result.",
+    "minValue": "5%",
+    "maxValue": "500%"
+  },
+  {
+    "Id": 7,
+    "effectName": "Initial Streak Multiplier",
+    "description": "Initial Streak Multiplier.",
+    "minValue": "1%",
+    "maxValue": "20%"
+  },
+  {
+    "Id": 8,
+    "effectName": "Streak Multiplier Grow",
+    "description": "Increment of streak multiplier after every correct answer.",
+    "minValue": "2%",
+    "maxValue": "5%"
+  },
+  {
+    "Id": 9,
+    "effectName": "Wrong answers limit",
+    "description": "How many wrong answers until the game and streak ends.",
+    "minValue": 1,
+    "maxValue": 4
+  },
+  {
+    "Id": 10,
+    "effectName": "Extra Armor",
+    "description": "Gain 1 extra armor after X streak.",
+    "minValue": 30,
+    "maxValue": 10
+  },
+  {
+    "Id": 11,
+    "effectName": "Free is fair",
+    "description": "Difficulties for Free.",
+    "minValue": 1,
+    "maxValue": 4
+  },
+  {
+    "Id": 12,
+    "effectName": "Chest Insanity",
+    "description": "Increase drop of chest.",
+    "minValue": 1,
+    "maxValue": 1
+  },
+  {
+    "Id": 13,
+    "effectName": "More gold",
+    "description": "Default gold is 100%. This increases of X%.",
+    "minValue": "25%",
+    "maxValue": "100%"
+  }
+]
+}

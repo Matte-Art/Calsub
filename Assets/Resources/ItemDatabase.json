@@ -1,0 +1,108 @@
+{
+    "list": [
+  {
+    "Id": 1,
+    "Name": "Timekeeper's Hourglass",
+    "Description": "A mystical hourglass that controls the flow of time.",
+    "Type": 0,
+    "EffectId": 1,
+    "Image": "hourglass.png"
+  },
+  {
+    "Id": 2,
+    "Name": "Chrono Charm",
+    "Description": "A magical charm that bends time to your advantage.",
+    "Type": 0,
+    "EffectId": 2,
+    "Image": "chrono_charm.png"
+  },
+  {
+    "Id": 3,
+    "Name": "Temporal Stopwatch",
+    "Description": "A high-tech stopwatch capable of manipulating time.",
+    "Type": 0,
+    "EffectId": 3,
+    "Image": "stopwatch.png"
+  },
+  {
+    "Id": 4,
+    "Name": "Infinity Timer",
+    "Description": "A legendary timer that grants control over time itself.",
+    "Type": 0,
+    "EffectId": 4,
+    "Image": "infinity_timer.png"
+  },
+  {
+    "Id": 5,
+    "Name": "Searing Blade",
+    "Description": "A fiery blade that deals extra damage while in idle.",
+    "Type": 1,
+    "EffectId": 5,
+    "Image": "searing_blade.png"
+  },
+  {
+    "Id": 6,
+    "Name": "Infinity Gauntlet",
+    "Description": "A powerful gauntlet that multiplies damage after a correct answer.",
+    "Type": 1,
+    "EffectId": 6,
+    "Image": "infinity_gauntlet.png"
+  },
+  {
+    "Id": 7,
+    "Name": "Streak Booster",
+    "Description": "A magical amulet that boosts the initial streak multiplier.",
+    "Type": 1,
+    "EffectId": 7,
+    "Image": "streak_booster.png"
+  },
+  {
+    "Id": 8,
+    "Name": "Momentum Sword",
+    "Description": "A swift sword that increases the streak multiplier with each correct answer.",
+    "Type": 1,
+    "EffectId": 8,
+    "Image": "momentum_sword.png"
+  },
+  {
+    "Id": 9,
+    "Name": "Guardian Shield",
+    "Description": "A sturdy shield that increases the wrong answers limit.",
+    "Type": 2,
+    "EffectId": 9,
+    "Image": "guardian_shield.png"
+  },
+  {
+    "Id": 10,
+    "Name": "Armor of Resilience",
+    "Description": "A legendary armor that grants extra protection after achieving a certain streak.",
+    "Type": 2,
+    "EffectId": 10,
+    "Image": "armor_of_resilience.png"
+  },
+    {
+    "Id": 11,
+    "Name": "Lucky Charm",
+    "Description": "A mystical amulet that makes difficulties for free.",
+    "Type": 3,
+    "EffectId": 11,
+    "Image": "lucky_charm.png"
+  },
+  {
+    "Id": 12,
+    "Name": "Insanity Chestplate",
+    "Description": "A powerful chestplate that greatly increases the drop rate of chests.",
+    "Type": 3,
+    "EffectId": 12,
+    "Image": "insanity_chestplate.png"
+  },
+  {
+    "Id": 13,
+    "Name": "Gold Booster",
+    "Description": "An enchantment that boosts the default gold value by a certain percentage.",
+    "Type": 3,
+    "EffectId": 13,
+    "Image": "gold_booster.png"
+  }
+]
+}

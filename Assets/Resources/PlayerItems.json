@@ -1,0 +1,20 @@
+{
+  "list": [
+    {"ItemId":10,"Rarity":0,"Effects":[
+        {"EffectId":2,"EffectValue":1.0}
+    ]},
+    {"ItemId":2,"Rarity":1,"Effects":[
+        {"EffectId":2,"EffectValue":57.0}
+    ]},
+    {"ItemId":6,"Rarity":2,"Effects":[
+        {"EffectId":2,"EffectValue":1.0},
+        {"EffectId":6,"EffectValue":432.0}
+    ]},
+    {"ItemId":11,"Rarity":3,"Effects":[
+        {"EffectId":1,"EffectValue":1.0},
+        {"EffectId":2,"EffectValue":50.0},
+        {"EffectId":3,"EffectValue":30.0},
+        {"EffectId":4,"EffectValue":957.0}
+    ]}
+  ]
+}
