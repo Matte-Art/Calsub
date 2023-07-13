@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,10 +6,12 @@ using UnityEngine;
 using UnityEngine.AdaptivePerformance.Samsung.Android;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class ItemDetailsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image icon;
+    public Image rarityFrame;
     public Image iconDetails;
     public Image iconItemType;
     public Image rarityTriangle;
@@ -22,19 +25,36 @@ public class ItemDetailsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public TextMeshProUGUI rarityText;
     public List<TextMeshProUGUI> bonusesText;
 
+    public Button button;
+
     private GameObject detailsWindow;
 
     private PlayerItem playerItem;
+
+    public event Action<PlayerItem> OnItemClick;
+
     private void Awake()
     {
         detailsWindow = gameObject.transform.Find("Item_Details").gameObject;
         detailsWindow.SetActive(false);
-        
+        button = gameObject.GetComponent<Button>();
     }
+
+    public void HandleOnItemClick()
+    {
+        OnItemClick?.Invoke(playerItem);
+    }
+
     public void SetPlayerItem(PlayerItem item)
     {
         this.playerItem = item;
     }
+
+    public PlayerItem GetPlayerItem()
+    {
+        return playerItem;
+    }
+
     public void UpdateItemDetailsWindow()
     {
         detailsWindow.transform.position = new Vector3(0, detailsWindow.transform.position.y, detailsWindow.transform.position.z);
@@ -88,6 +108,14 @@ public class ItemDetailsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             }
         }
     }
+
+    public void DisableInteraction()
+    {
+        button.interactable = false;
+        icon.color = Color.gray;
+        rarityFrame.color = Color.gray;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         UpdateItemDetailsWindow();

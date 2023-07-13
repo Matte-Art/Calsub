@@ -19,6 +19,17 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         FillInventoryWithPlayerItems(playerItemList);
+        ItemUI[] itemDetailsUIs = FindObjectsOfType<ItemUI>();
+        foreach (ItemUI itemDetailsUI in itemDetailsUIs)
+        {
+            itemDetailsUI.OnItemClick += HandleItemClick;
+            Debug.Log("test");
+        }
+    }
+    public void HandleItemClick(PlayerItem playerItem)
+    {
+        ToggleItemEquip(playerItem);
+        Debug.Log("Klikniêto przycisk z przedmiotem: " + playerItem.Item.Name);
     }
 
     private void FillInventoryWithPlayerItems(ListWrapperJSON<PlayerItemJSON> playerItems)
@@ -55,6 +66,8 @@ public class Inventory : MonoBehaviour
     //    //File.WriteAllText(filePath, json);
     //}
 
+
+
     public bool AddItem(PlayerItem item)
     {
         for (int i = 0; i < rows; i++)
@@ -89,6 +102,18 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    public void ToggleItemEquip(PlayerItem item)
+    {
+        if (equippedItems.Contains(item))
+        {
+            UnequipItem(item);
+        }
+        else if (!equippedItems.Contains(item))
+        {
+            EquipItem(item);
+        }
+    }
+
     public bool EquipItem(PlayerItem item)
     {
         if (equippedItems.Contains(item))
@@ -96,25 +121,25 @@ public class Inventory : MonoBehaviour
             Debug.LogWarning("Przedmiot jest ju¿ za³o¿ony!");
             return false;
         }
-        return true;
-        //switch (item.Item.Type)
-        //{
-        //    case ItemType.Clock:
-        //        equippedItems.Add(item);
-        //        return true;
-        //    case ItemType.Attack:
-        //        equippedItems.Add(item);
-        //        return true;
-        //    case ItemType.Defense:
-        //        equippedItems.Add(item);
-        //        return true;
-        //    case ItemType.Extra:
-        //        equippedItems.Add(item);
-        //        return true;
-        //    default:
-        //        Debug.LogWarning("Nieobs³ugiwany typ przedmiotu!");
-        //        return false;
-        //}
+        
+        switch (item.Item.Type)
+        {
+            case ItemType.Clock:
+                equippedItems.Add(item);
+                return true;
+            case ItemType.Attack:
+                equippedItems.Add(item);
+                return true;
+            case ItemType.Defense:
+                equippedItems.Add(item);
+                return true;
+            case ItemType.Extra:
+                equippedItems.Add(item);
+                return true;
+            default:
+                Debug.LogWarning("Nieobs³ugiwany typ przedmiotu!");
+                return false;
+        }
     }
 
     public bool UnequipItem(PlayerItem item)
@@ -131,7 +156,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public PlayerItem GetItem(int row, int column)
+    public PlayerItem GetItemByRowColumn(int row, int column)
     {
         if (row >= 0 && row < rows && column >= 0 && column < columns)
         {
@@ -144,9 +169,19 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool IsItemEquiped(PlayerItem item)
+    {
+        return equippedItems.Contains(item);
+    }
+
     public List<PlayerItem> GetEquippedItems()
     {
         return equippedItems;
+    }
+
+    public PlayerItem[,] GetPlayerItems()
+    {
+        return playerItems;
     }
 
     public void LoadPlayerItemsFromFile(string fileName)

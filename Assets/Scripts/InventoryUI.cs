@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +12,20 @@ public class InventoryUI : MonoBehaviour
 
     public Inventory inventory;
 
+    private List<ItemUI> inventoryItemUIs;
+    private List<ItemUI> equipedItemUIs;
+
     private void Start()
     {
         UpdateInventoryUI();
     }
+
+    private void HandleItemClick(PlayerItem playerItem)
+    {
+        inventory.HandleItemClick(playerItem);
+        UpdateInventoryUI();
+    }
+
     private void DrawItem(PlayerItem playerItem, Transform parent, Vector3 position)
     {
         var itemDetails = DataLoader.Instance.GetItemById(playerItem.ItemId);
@@ -23,8 +34,12 @@ public class InventoryUI : MonoBehaviour
         var rarityColor = ColorManager.Instance.GetColorByRarity(playerItem.Rarity);
 
         GameObject newItem = Instantiate(itemPrefab, parent);
+        
+        var itemUI = newItem.GetComponent<ItemUI>();
 
-        newItem.GetComponent<ItemDetailsUI>().SetPlayerItem(playerItem);
+        itemUI.SetPlayerItem(playerItem);
+        itemUI.OnItemClick += HandleItemClick;
+
         newItem.transform.localPosition = position;
 
         var rarityFrame = newItem.transform.Find("RarityFrame");
@@ -45,16 +60,30 @@ public class InventoryUI : MonoBehaviour
         {
             iconReflection.GetComponent<Image>().color = rarityColor;
         }
+
+        if (parent == inventoryPanel)
+        {
+            inventoryItemUIs.Add(itemUI);
+        }
+
+        if (parent == equipedPanel)
+        {
+            equipedItemUIs.Add(itemUI);
+        }
+        
     }
     public void UpdateInventoryUI()
     {
+        inventoryItemUIs = new List<ItemUI>();
+        equipedItemUIs = new List<ItemUI>();
         ClearInventoryUI();
 
+        // Draw Inventory Items
         for (int i = 0; i < inventory.rows; i++)
         {
             for (int j = 0; j < inventory.columns; j++)
             {
-                PlayerItem item = inventory.GetItem(i, j);
+                PlayerItem item = inventory.GetItemByRowColumn(i, j);
                 if (item != null)
                 {
                     float posX = -120f + j * 60f;
@@ -65,10 +94,11 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
+        // Draw Equiped Items
         foreach (PlayerItem item in inventory.GetEquippedItems())
         {
             var position = new Vector3();
-            var itemDetails = DataLoader.Instance.GetItemById(item.ItemId);
+            var itemDetails = item.Item;
 
             switch (itemDetails.Type)
             {
@@ -90,11 +120,29 @@ public class InventoryUI : MonoBehaviour
 
             DrawItem(item, equipedPanel, position);
         }
+
+        // Disable Equiped Items in inventory
+        foreach (var item in inventoryItemUIs)
+        {
+            if (inventory.IsItemEquiped(item.GetPlayerItem()))
+            {
+                item.DisableInteraction();
+            }
+        }
+
+        foreach (var item in equipedItemUIs)
+        {
+            item.GetComponent<Button>().interactable = true;
+        }
     }
 
     private void ClearInventoryUI()
     {
         foreach (Transform child in inventoryPanel)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in equipedPanel)
         {
             Destroy(child.gameObject);
         }

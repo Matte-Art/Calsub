@@ -41,7 +41,7 @@ public class ColorManager : MonoBehaviour
         };
 
     }
-    // sad
+
     public Color GetColorByRarity(Rarity rarity)
     {
         return rarity switch
