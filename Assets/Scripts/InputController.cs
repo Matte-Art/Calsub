@@ -10,6 +10,7 @@ public class InputController : MonoBehaviour
 {
     public GameObject[] keyboardButtons;
     public GameObject[] idleButtons;
+
     public ExpandableMenu taskTypeMenu;
     public ExpandableMenu difficultiesMenu;
     public ExpandableMenu userMenu;
@@ -22,6 +23,7 @@ public class InputController : MonoBehaviour
     private string playerInputValue;
 
     public event Action OnCheckResultButtonClicked;
+    public event Action<MathOperationType> OnMathOperationTypeChanged;
 
     private GameManager gameManager;
 
@@ -55,6 +57,16 @@ public class InputController : MonoBehaviour
             difficultiesMenu,
             userMenu
         };
+
+        for (int i = 0; i < taskTypeMenu.buttonList.Length; i++)
+        {
+            int index = i;
+
+            taskTypeMenu.buttonList[i].GetComponent<Button>().onClick.AddListener(() =>
+            {
+                OnMathOperationTypeChanged?.Invoke((MathOperationType)index);
+            });
+        }
     }
 
     private void Start()
@@ -151,7 +163,10 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            playerInputValue += value;
+            if (playerInputValue.Length <= 9)
+            {
+                playerInputValue += value;
+            }  
         }
     }
 
