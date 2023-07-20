@@ -48,6 +48,10 @@ public class DifficultyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        additionDifficulties = DataLoader.Instance.DifficultyLevelDatabase.additionDifficulties;
+        subtractionDifficulties = DataLoader.Instance.DifficultyLevelDatabase.subtractionDifficulties;
+        multiplicationDifficulties = DataLoader.Instance.DifficultyLevelDatabase.multiplicationDifficulties;
+        divisionDifficulties = DataLoader.Instance.DifficultyLevelDatabase.divisionDifficulties;
     }
 
     public void SetDifficulty(int difficulty)
