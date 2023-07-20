@@ -8,10 +8,6 @@ public class FX_Clock : MonoBehaviour
 
     public Image clockImage;
     public Image clockExtraImage;
-    public Texture plusParticle;
-    public Texture minusParticle;
-    public Texture divideParticle;
-    public Texture multiParticle;
 
     private RectTransform clockPivot;
     private ParticleSystem particleSys;
@@ -32,6 +28,8 @@ public class FX_Clock : MonoBehaviour
         particleSys = GetComponentInChildren<ParticleSystem>();
         clockPivot = GetComponent<RectTransform>();
         particleMaterial = particleSys.GetComponent<Renderer>().material;
+
+
     }
     private void Start()
     {
@@ -43,16 +41,16 @@ public class FX_Clock : MonoBehaviour
         switch (type)
         {
             case MathOperationType.Addition:
-                particleMaterial.SetTexture("_MainTex", plusParticle);
+                particleMaterial.SetTexture("_MainTex", ColorManager.Instance.additionImage);
                 break;
             case MathOperationType.Subtraction:
-                particleMaterial.SetTexture("_MainTex", minusParticle);
+                particleMaterial.SetTexture("_MainTex", ColorManager.Instance.subtractionImage);
                 break;
             case MathOperationType.Multiplication:
-                particleMaterial.SetTexture("_MainTex", multiParticle);
+                particleMaterial.SetTexture("_MainTex", ColorManager.Instance.multiplicationImage);
                 break;
             case MathOperationType.Division:
-                particleMaterial.SetTexture("_MainTex", divideParticle);
+                particleMaterial.SetTexture("_MainTex", ColorManager.Instance.divisionImage);
                 break;
         }
     }
@@ -183,5 +181,29 @@ public class FX_Clock : MonoBehaviour
         }
 
         fillCircle.color = new Color(1f, 1f, 1f, 0.5f);
+    }
+
+    public void ChangeExtraClockColor(Color color)
+    {
+        StartCoroutine(ColorChangeCoroutine(color));
+    }
+
+    private System.Collections.IEnumerator ColorChangeCoroutine(Color targetColor)
+    {
+        float elapsedTime = 0f;
+        float duration = 1f;
+        var initialColor = clockExtraImage.color;
+
+        while (elapsedTime < duration)
+        {
+            float normalizedTime = elapsedTime / duration;
+            clockExtraImage.color = Color.Lerp(initialColor, targetColor, normalizedTime);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        initialColor = targetColor;
+        clockExtraImage.color = targetColor;
     }
 }
