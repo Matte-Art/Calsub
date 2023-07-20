@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public event Action<MathTask> OnRoundStart;
     public event Action<RoundEndEventArgs> OnRoundEnd;
     public event Action OnIdleEnabled;
+
     void Awake()
     {
         taskGenerator = GetComponent<MathTaskGenerator>();
