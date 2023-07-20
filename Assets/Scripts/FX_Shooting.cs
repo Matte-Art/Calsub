@@ -10,12 +10,12 @@ public class FX_Shooting : MonoBehaviour
     private float shootingDuration = 0.5f;
     private float minRotationSpeed = 10f;
     private float maxRotationSpeed = 20f;
-    private float maxCurveAmount = 800.0f;
+    private float maxCurveAmount = 400.0f;
     private float circleRadius = 100f;
 
     private void Start()
     {
-        //StartShooting(5);
+        StartShooting(10);
     }
 
     public void StartShooting(int bulletsAmount)

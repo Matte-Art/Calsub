@@ -7,7 +7,7 @@ public class FXManager : MonoBehaviour
     public FX_Streak fxStreak;
     public FX_Background fxBackground;
     public FX_Shooting fxShooting;
-
+    public FX_Keyboard fxKeyboard;
     private void Awake()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
@@ -23,16 +23,26 @@ public class FXManager : MonoBehaviour
     {
         fxClock.SetClockParticleType(task.operationType);
         fxClock.PlayParticleEmission();
+        fxKeyboard.ShowKeyboard();
     }
 
     private void HandleRoundEnd(RoundEndEventArgs args)
     {
         fxClock.StopParticleEmission();
-        fxShooting.StartShooting((int)args.Task.result);
+
+        if (args.IsTaskCorrect)
+        {
+            fxShooting.StartShooting((int)args.Task.result);
+        }
+        else
+        {
+            // wrong answer
+        }
     }
     private void HandleIdleEnabled()
     {
         fxClock.StopParticleEmission();
+        fxKeyboard.CollapseKeyboard();
     }
 
     private void HandleMathOperationTypeChanged(MathOperationType mathOperationType)

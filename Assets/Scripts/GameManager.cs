@@ -7,11 +7,12 @@ public class RoundEndEventArgs : EventArgs
 {
     public MathTask Task;
     public float ExtraTime;
-
-    public RoundEndEventArgs(MathTask task, float extraTime)
+    public bool IsTaskCorrect;
+    public RoundEndEventArgs(MathTask task, float extraTime, bool isCorrect)
     {
         Task = task;
         ExtraTime = extraTime;
+        IsTaskCorrect = isCorrect;
     }
 }
 
@@ -190,7 +191,7 @@ public class GameManager : MonoBehaviour
             extraTime = 0f;
         }
 
-        OnRoundEnd?.Invoke(new RoundEndEventArgs(currentTask, extraTime));
+        OnRoundEnd?.Invoke(new RoundEndEventArgs(currentTask, extraTime, taskCorrect));
         return taskCorrect;
     }
 
