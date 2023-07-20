@@ -85,6 +85,38 @@ public class UIController : MonoBehaviour
     public void UpdatePlayerInput(string text)
     {
         playerInputText.text = text;
+        UpdatePlayerInputFontSize(text.Length);
+    }
+
+    public void UpdatePlayerInputFontSize(int charsCount)
+    {
+        switch (charsCount)
+        {
+            case 4:
+                playerInputText.fontSize = 36;
+                break;
+            case 5:
+                playerInputText.fontSize = 32;
+                break;
+            case 6:
+                playerInputText.fontSize = 28;
+                break;
+            case 7:
+                playerInputText.fontSize = 26;
+                break;
+            case 8: 
+                playerInputText.fontSize = 24;
+                break;
+            case 9:
+                playerInputText.fontSize = 22;
+                break;
+            case 10:
+                playerInputText.fontSize = 20;
+                break;
+            default:
+                playerInputText.fontSize = 36;
+                break;
+        }
     }
 
     private void UpdateScoreText(int newScore)
@@ -129,5 +161,10 @@ public class UIController : MonoBehaviour
     public void ShowInventoryUI()
     {
         uiInventory.gameObject.SetActive(true);
+    }
+
+    public void HideInventoryUI()
+    {
+        uiInventory.gameObject.SetActive(false);
     }
 }
