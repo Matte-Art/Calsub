@@ -6,12 +6,20 @@ using UnityEngine.UI;
 
 public class EnemyUI : MonoBehaviour
 {
+    public Image enemyImage;
     public TextMeshProUGUI healthBarText;
     public Image healthBarImage;
+
+    public List<Sprite> enemyImages;
 
     private void Awake()
     {
 
+    }
+
+    public void SetImageById(int id)
+    {
+        enemyImage.sprite = enemyImages[id];
     }
 
     public void UpdateHealthBarText(Enemy enemy)

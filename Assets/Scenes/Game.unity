@@ -380,7 +380,7 @@ MonoBehaviour:
   MaxHP: 0
   CurrentHP: 0
   Level: 0
-  EnemyImageId: 0
+  ImageId: 0
 --- !u!114 &37240351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,14 +394,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.32452828, g: 0.6888913, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.56037736, b: 0.9915989, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a8bb1f9cd961988499b226d49576a187, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd06ccfbd2007ac4cb66609df2322e19, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -431,8 +431,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eab5ed2de9e77341878d0906a68e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyImage: {fileID: 0}
   healthBarText: {fileID: 1061719550}
   healthBarImage: {fileID: 519735054}
+  enemyImages:
+  - {fileID: 21300000, guid: 1ebb5b0e9b6e50c498fd9eb5e9d44da5, type: 3}
+  - {fileID: 21300000, guid: 949e896307a23494385c21ea8e439e45, type: 3}
+  - {fileID: 21300000, guid: a8bb1f9cd961988499b226d49576a187, type: 3}
+  - {fileID: 21300000, guid: 26273ebadbafa124a871ce08165728ea, type: 3}
+  - {fileID: 21300000, guid: 4fd93a4115d2d3546a0163c84c7f9766, type: 3}
+  - {fileID: 21300000, guid: dd06ccfbd2007ac4cb66609df2322e19, type: 3}
+  - {fileID: 21300000, guid: 2407809896c7b5e479a8e0645c264c7e, type: 3}
+  - {fileID: 21300000, guid: 07484d242d1780845bd55d80e8367259, type: 3}
 --- !u!1 &99867897 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1868124415822376420, guid: 373ff33d7e1c2f949a2b8e92ef566639,

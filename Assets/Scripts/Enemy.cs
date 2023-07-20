@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public int MaxHP;
     public int CurrentHP;
     public int Level;
-    public int EnemyImageId;
+    public int ImageId;
 
     private EnemyUI enemyUI;
     private void Awake()
@@ -45,6 +45,9 @@ public class Enemy : MonoBehaviour
 
         enemyUI.UpdateHealthBarFill(this);
         enemyUI.UpdateHealthBarText(this);
+
+        ImageId = Random.Range(0, enemyUI.enemyImages.Count);
+        enemyUI.SetImageById(ImageId);
     }
 
     public void TakeDamage(int amount)
@@ -58,10 +61,9 @@ public class Enemy : MonoBehaviour
 
     private void IncreaseStatsOnDeath()
     {
-        MaxHP += 10; // Przyk³adowa wartoœæ, mo¿esz dostosowaæ do potrzeb gry
+        MaxHP += 10;
         CurrentHP = MaxHP;
-        Level++; // Zwiêkszenie poziomu o 1
-        EnemyImageId++; // Zwiêkszenie identyfikatora obrazka przeciwnika o 1
+        Level++;
     }
 
     public void LoadEnemyFromFile(string fileName)
@@ -76,7 +78,7 @@ public class Enemy : MonoBehaviour
             MaxHP = enemyData.MaxHP;
             CurrentHP = enemyData.CurrentHP;
             Level = enemyData.Level;
-            EnemyImageId = enemyData.EnemyImageId;
+            ImageId = enemyData.ImageId;
         }
         else
         {
@@ -91,7 +93,7 @@ public class Enemy : MonoBehaviour
             MaxHP = MaxHP,
             CurrentHP = CurrentHP,
             Level = Level,
-            EnemyImageId = EnemyImageId
+            ImageId = ImageId
         };
 
         var jsonData = JsonUtility.ToJson(enemyData);
@@ -105,5 +107,5 @@ public class EnemyData
     public int MaxHP;
     public int CurrentHP;
     public int Level;
-    public int EnemyImageId;
+    public int ImageId;
 }
