@@ -25,7 +25,6 @@ public class Inventory : MonoBehaviour
     public void HandleItemClick(PlayerItem playerItem)
     {
         ToggleItemEquip(playerItem);
-        Debug.Log("Klikniêto przycisk z przedmiotem: " + playerItem.Item.Name);
     }
 
     private void FillInventoryWithPlayerItems(ListWrapperJSON<PlayerItemJSON> playerItems)
