@@ -10,12 +10,14 @@ public class DataLoader : MonoBehaviour
     public List<ItemEffect> ItemEffectDatabase;
     public DifficultyLevelList DifficultyLevelDatabase;
 
-    private Inventory inventory;// nie wiem czy usun¹æ to
+    private Inventory inventory;
+    private Enemy enemy;
 
     private const string DifficultyLevelsFileName = "TaskDifficulties";
     private const string ItemEffectsFileName = "ItemEffectsDatabase";
     private const string ItemDatabaseFileName = "ItemDatabase";
     private const string PlayerItemsFileName = "PlayerItems";
+    private const string EnemyDataFileName = "EnemyData";
 
     private void Awake()
     {
@@ -30,11 +32,13 @@ public class DataLoader : MonoBehaviour
         }
 
         inventory = GameObject.Find("Player").GetComponent<Inventory>();
+        enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
 
         LoadDifficultyLevelsFromFile(DifficultyLevelsFileName);
         LoadItemEffectsFromFile(ItemEffectsFileName);
         LoadItemsFromFile(ItemDatabaseFileName);
         inventory.LoadPlayerItemsFromFile(PlayerItemsFileName);
+        enemy.LoadEnemyFromFile(EnemyDataFileName);
     }
 
     public void LoadDifficultyLevelsFromFile(string fileName)
@@ -85,6 +89,8 @@ public class DataLoader : MonoBehaviour
             Debug.LogError("Item Effect Database file not found: " + file);
         }
     }
+
+
 
     public Item GetItemById(int itemId)
     {
