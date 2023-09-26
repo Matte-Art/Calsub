@@ -4,7 +4,13 @@ using UnityEngine.UI;
 
 public class FX_Shooting : MonoBehaviour
 {
-    public GameObject bulletPrefab;
+    public GameObject currentBullet;
+
+    public GameObject bulletPrefabAddition;
+    public GameObject bulletPrefabSubtraction;
+    public GameObject bulletPrefabMultiplication;
+    public GameObject bulletPrefabDivision;
+
     public Transform enemyPosition;
     public float sA, eA;
     private float shootingDuration = 0.5f;
@@ -34,8 +40,32 @@ public class FX_Shooting : MonoBehaviour
 
     private void ShootBullet()
     {
-        GameObject bullet = Instantiate(bulletPrefab, GetRandomCirclePosition(), Quaternion.identity, gameObject.transform);
+        GameObject bullet = Instantiate(currentBullet, GetRandomCirclePosition(), Quaternion.identity, gameObject.transform);
         StartCoroutine(MoveBullet(bullet));
+    }
+
+    public void ChangeBulletType(MathOperationType operationType)
+    {
+        switch (operationType)
+        {
+            case MathOperationType.Addition:
+                currentBullet = bulletPrefabAddition;
+                break;
+            case MathOperationType.Subtraction:
+                currentBullet = bulletPrefabSubtraction;
+                break;
+            case MathOperationType.Division:
+                currentBullet = bulletPrefabDivision;
+                break;
+            case MathOperationType.Multiplication:
+                currentBullet = bulletPrefabMultiplication;
+                break;
+        }
+    }
+
+    public void ChangeBulletColor(Color color)
+    {
+        currentBullet.GetComponent<Image>().color = color;
     }
 
     private Vector3 GetRandomCirclePosition()
