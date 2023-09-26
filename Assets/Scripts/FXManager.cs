@@ -8,6 +8,7 @@ public class FXManager : MonoBehaviour
     public FX_Background fxBackground;
     public FX_Shooting fxShooting;
     public FX_Keyboard fxKeyboard;
+    public FX_Enemy fxEnemy;
     private void Awake()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
@@ -24,6 +25,7 @@ public class FXManager : MonoBehaviour
         fxClock.SetClockParticleType(task.operationType);
         fxClock.PlayParticleEmission();
         fxKeyboard.ShowKeyboard();
+        fxEnemy.ShowEnemy();
     }
 
     private void HandleRoundEnd(RoundEndEventArgs args)
@@ -43,6 +45,7 @@ public class FXManager : MonoBehaviour
     {
         fxClock.StopParticleEmission();
         fxKeyboard.CollapseKeyboard();
+        fxEnemy.CollapseEnemy();
     }
 
     private void HandleMathOperationTypeChanged(MathOperationType mathOperationType)
@@ -50,6 +53,8 @@ public class FXManager : MonoBehaviour
         var color = ColorManager.Instance.GetColorByMathOperationType(mathOperationType);
         fxBackground.ChangeBackgroundColor(color);
         fxBackground.SetBackgroundParticleType(mathOperationType);
+        fxShooting.ChangeBulletType(mathOperationType);
+        fxShooting.ChangeBulletColor(color);
         fxClock.ChangeExtraClockColor(color);
     }
 }
