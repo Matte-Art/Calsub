@@ -25,17 +25,21 @@ public class Enemy : MonoBehaviour
 
     private void HandleRoundEnd(RoundEndEventArgs args)
     {
-        var damage = args.Task.result;
-        TakeDamage((int)damage);
-
-        enemyUI.UpdateHealthBarFill(this);
-        enemyUI.UpdateHealthBarText(this);
-
-        if (CurrentHP <= 0)
+        if (args.IsTaskCorrect)
         {
-            IncreaseStatsOnDeath();
+            var damage = args.Task.result;
 
-            StartCoroutine(UpdateUIAfterDelay(GameManager.roundDelay));
+            TakeDamage((int)damage);
+
+            enemyUI.UpdateHealthBarFill(this);
+            enemyUI.UpdateHealthBarText(this);
+
+            if (CurrentHP <= 0)
+            {
+                IncreaseStatsOnDeath();
+
+                StartCoroutine(UpdateUIAfterDelay(GameManager.roundDelay));
+            }
         }
     }
 
