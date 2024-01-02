@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public GameObject randomNumbers;
     public GameObject task;
     public GameObject playerInput;
     public GameObject score;
@@ -16,6 +17,7 @@ public class UIController : MonoBehaviour
 
     public Image timeCircle;
 
+    private TextMeshProUGUI randomNumbersText;
     private TextMeshProUGUI taskText;
     private TextMeshProUGUI playerInputText;
     private TextMeshProUGUI scoreText;
@@ -24,7 +26,7 @@ public class UIController : MonoBehaviour
 
     void Awake()
     {
-        
+        randomNumbersText = randomNumbers.GetComponent<TextMeshProUGUI>();
         taskText = task.GetComponent<TextMeshProUGUI>();
         playerInputText = playerInput.GetComponent<TextMeshProUGUI>();
         scoreText = score.GetComponent<TextMeshProUGUI>();
@@ -58,6 +60,11 @@ public class UIController : MonoBehaviour
     private void HandleIdleEnabled()
     {
         UpdatePlayerInput(string.Empty);
+    }
+
+    public void UpdateRandomNumbersText(string text)
+    {
+        randomNumbersText.text = text;
     }
 
     public void UpdateTaskText(string text)
@@ -142,20 +149,6 @@ public class UIController : MonoBehaviour
         Color lerpedColor = Color.Lerp(endColor, startColor, timePart);
 
         timeCircle.color = lerpedColor;
-    }
-
-    public string GenerateRandomString(int length)
-    {
-        string characters = "-+×÷1234567890";
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < length; i++)
-        {
-            int index = UnityEngine.Random.Range(0, characters.Length);
-            sb.Append(characters[index]);
-        }
-
-        return sb.ToString();
     }
 
     public void ShowInventoryUI()
