@@ -3,15 +3,19 @@ using UnityEngine.VFX;
 
 public class FXManager : MonoBehaviour
 {
-    public FX_Clock fxClock;
+    public FX_Timer fxTimer;
     public FX_Streak fxStreak;
     public FX_Background fxBackground;
     public FX_Shooting fxShooting;
     public FX_Keyboard fxKeyboard;
     public FX_Enemy fxEnemy;
+    public FX_Check_Result fxCheckResult;
+    public FX_Start fxStart;
+
     private void Awake()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
+        gameManager.OnGameStarting += HandleOnGameStarting;
         gameManager.OnRoundStart += HandleRoundStart;
         gameManager.OnRoundEnd += HandleRoundEnd;
         gameManager.OnIdleEnabled += HandleIdleEnabled;
@@ -20,17 +24,24 @@ public class FXManager : MonoBehaviour
         inputController.OnMathOperationTypeChanged += HandleMathOperationTypeChanged;
 
     }
+
+    private void HandleOnGameStarting()
+    {
+        fxKeyboard.Show();
+        
+    }
+
     private void HandleRoundStart(MathTask task)
     {
-        fxClock.SetClockParticleType(task.operationType);
-        fxClock.PlayParticleEmission();
-        fxKeyboard.ShowKeyboard();
+        fxTimer.SetClockParticleType(task.operationType);
+        fxTimer.PlayParticleEmission();
         fxEnemy.ShowEnemy();
+        fxTimer.Show();
     }
 
     private void HandleRoundEnd(RoundEndEventArgs args)
     {
-        fxClock.StopParticleEmission();
+        fxTimer.StopParticleEmission();
 
         if (args.IsTaskCorrect)
         {
@@ -43,9 +54,11 @@ public class FXManager : MonoBehaviour
     }
     private void HandleIdleEnabled()
     {
-        fxClock.StopParticleEmission();
-        fxKeyboard.CollapseKeyboard();
+        fxTimer.StopParticleEmission();
+        fxKeyboard.Collapse();
         fxEnemy.CollapseEnemy();
+        fxStart.PlayRandomTextFX();
+        fxTimer.Collapse();
     }
 
     private void HandleMathOperationTypeChanged(MathOperationType mathOperationType)
@@ -55,6 +68,6 @@ public class FXManager : MonoBehaviour
         fxBackground.SetBackgroundParticleType(mathOperationType);
         fxShooting.ChangeBulletType(mathOperationType);
         fxShooting.ChangeBulletColor(color);
-        fxClock.ChangeExtraClockColor(color);
+        fxTimer.ChangeExtraClockColor(color);
     }
 }
