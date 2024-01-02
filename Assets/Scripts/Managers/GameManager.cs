@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +23,6 @@ public class GameManager : MonoBehaviour
     public float extraTime = 0f;
 
     public static float roundDelay = 1f;
-    [SerializeField] float idleAnimationDelay = 0.5f;
 
     private static float initialExtraTime;
 
@@ -33,9 +33,10 @@ public class GameManager : MonoBehaviour
     private MathTask currentTask;
     private FXManager fxManager;
     private float timer;
-    private bool isRunning = false;
+    public bool isRunning = false;
     private bool answeredInTime = false;
 
+    public event Action OnGameStarting;
     public event Action<MathTask> OnRoundStart;
     public event Action<RoundEndEventArgs> OnRoundEnd;
     public event Action OnIdleEnabled;
@@ -50,7 +51,6 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        inputController.OnCheckResultButtonClicked += ValidateInputAndStartNewRound;
         EnableIdleMode();
 
         
@@ -71,8 +71,6 @@ public class GameManager : MonoBehaviour
     {
         isRunning = false;
         OnIdleEnabled?.Invoke();
-
-        StartCoroutine(IdleTextAnimationCoroutine());
     }
     private void UpdateGeneratorDifficulty()
     {
@@ -109,7 +107,7 @@ public class GameManager : MonoBehaviour
     {
         bool taskCorrect = EndRound();
 
-        fxManager.fxClock.PlayFillClockAndExtraTime(extraTime / 10f);
+        fxManager.fxTimer.PlayFillTimerAndExtraTimer(extraTime / 10f);
 
         if (taskCorrect)
         {
@@ -121,7 +119,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ValidateInputAndStartNewRound()
+    public void ValidateInputAndStartNewRound()
     {
         if (inputController.GetPlayerInput() != string.Empty)
         {
@@ -131,9 +129,11 @@ public class GameManager : MonoBehaviour
 
     public void StartRoundOnClick()
     {
+        OnGameStarting?.Invoke();
+
         if (!isRunning)
         {
-            StartRound();
+            Invoke(nameof(StartRound), roundDelay);
         }
     }
     private void StartRound()
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
 
         if (taskCorrect)
         {
-            fxManager.fxClock.PlayCorrectCircleFX();
+            fxManager.fxCheckResult.PlayCorrectResultFX();
             scoreManager.IncreaseScore(1);
             scoreManager.IncreaseStreak(1);
 
@@ -180,29 +180,19 @@ public class GameManager : MonoBehaviour
         {
             scoreManager.DecreaseScore(1);
             scoreManager.ResetStreak();
-            fxManager.fxClock.PlayWrongCircleFX();
+            fxManager.fxCheckResult.PlayWrongResultFX();
             extraTime = 0f;
         }
         else
         {
             scoreManager.DecreaseScore(1);
             scoreManager.ResetStreak();
-            fxManager.fxClock.PlayWrongCircleFX();
+            fxManager.fxCheckResult.PlayWrongResultFX();
             extraTime = 0f;
         }
 
         OnRoundEnd?.Invoke(new RoundEndEventArgs(currentTask, extraTime, taskCorrect));
         return taskCorrect;
-    }
-
-
-    private IEnumerator IdleTextAnimationCoroutine()
-    {
-        while (!isRunning)
-        {
-            uiController.UpdateTaskText(uiController.GenerateRandomString(6));
-            yield return new WaitForSeconds(idleAnimationDelay);
-        }
     }
 
     void Update()
@@ -215,7 +205,7 @@ public class GameManager : MonoBehaviour
 
             float time = timer / roundTimeLimit;
 
-            fxManager.fxClock.UpdateClockCircle(time);
+            fxManager.fxTimer.UpdateTimer(time);
             //uiController.ChangeColorByTime(time);
 
             if (timer <= 0f)
