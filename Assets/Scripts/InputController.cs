@@ -10,19 +10,21 @@ public class InputController : MonoBehaviour
 {
     public GameObject[] keyboardButtons;
     public GameObject[] idleButtons;
+    public GameObject startObject;
+    public GameObject checkResultObject;
+
+    public Button startButton;
+    public Button checkResultButton;
 
     public ExpandableMenu taskTypeMenu;
     public ExpandableMenu difficultiesMenu;
     public ExpandableMenu userMenu;
-
-    public Button checkResultButton;
 
     private UIController uiController;
     private List<ExpandableMenu> expandableMenus;
 
     private string playerInputValue;
 
-    public event Action OnCheckResultButtonClicked;
     public event Action<MathOperationType> OnMathOperationTypeChanged;
 
     private GameManager gameManager;
@@ -30,14 +32,23 @@ public class InputController : MonoBehaviour
     private void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
+        uiController = GetComponent<UIController>();
+        startButton = startObject.GetComponentInChildren<Button>();
+        checkResultButton = checkResultObject.GetComponentInChildren<Button>();
+
+        gameManager.OnGameStarting += HandleOnGameStarting;
         gameManager.OnRoundStart += HandleRoundStart;
         gameManager.OnRoundEnd += HandleRoundEnd;
         gameManager.OnIdleEnabled += HandleIdleEnabled;
-        uiController = GetComponent<UIController>();
+
+        startButton.onClick.AddListener(() =>
+        {
+            HandleStartButtonClick();
+        });
 
         checkResultButton.onClick.AddListener(() =>
         {
-            OnCheckResultButtonClicked?.Invoke();
+            HandleCheckResultButtonClick();
         });
 
         for (int i = 0; i < keyboardButtons.Length; i++)
@@ -118,18 +129,24 @@ public class InputController : MonoBehaviour
         }
     }
 
-    public void HandleRoundStart(MathTask task)
+    private void HandleOnGameStarting()
     {
-        checkResultButton.interactable = true;
-        EnableKeyboardButtons();
-        ResetPlayerInput();
-        uiController.UpdatePlayerInput(playerInputValue);
-
+        startObject.SetActive(false);
         foreach (var menu in expandableMenus)
         {
             menu.CollapseMenu();
             menu.HideMenu();
         }
+    }
+
+    public void HandleRoundStart(MathTask task)
+    {
+        checkResultObject.SetActive(true);
+        checkResultButton.GetComponent<Button>().interactable = true;
+
+        EnableKeyboardButtons();
+        ResetPlayerInput();
+        uiController.UpdatePlayerInput(playerInputValue);
     }
 
     private void HandleRoundEnd(RoundEndEventArgs args)
@@ -139,13 +156,15 @@ public class InputController : MonoBehaviour
 
     private void HandleIdleEnabled()
     {
-        checkResultButton.interactable = true;
         DisableKeyboardButtons();
 
         foreach (var menu in expandableMenus)
         {
             menu.ShowMenu();
         }
+
+        startObject.SetActive(true);
+        checkResultObject.SetActive(false);
     }
 
     public string GetPlayerInput() => playerInputValue;
@@ -176,8 +195,6 @@ public class InputController : MonoBehaviour
         {
             button.GetComponent<Button>().interactable = true;
         }
-
-        checkResultButton.interactable = true;
     }
 
     public void DisableAllButtons()
@@ -187,7 +204,7 @@ public class InputController : MonoBehaviour
             button.GetComponent<Button>().interactable = false;
         }
 
-        checkResultButton.interactable = false;
+        checkResultButton.GetComponent<Button>().interactable = false;
     }
 
     public void EnableKeyboardButtons()
@@ -206,5 +223,13 @@ public class InputController : MonoBehaviour
         }
     }
 
+    private void HandleStartButtonClick()
+    {
+        gameManager.StartRoundOnClick();
+    }
 
+    private void HandleCheckResultButtonClick()
+    {
+        gameManager.ValidateInputAndStartNewRound();
+    }
 }
