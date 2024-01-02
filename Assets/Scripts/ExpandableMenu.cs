@@ -178,19 +178,6 @@ public class ExpandableMenu : MonoBehaviour
         gameObject.GetComponent<Button>().interactable = true;
     }
 
-    //private void DeactiveAllAnimatedButtons()
-    //{
-    //    foreach (var button in animatedButtons) 
-    //    {
-    //        DeactiveAnimatedButton(button);
-    //    }
-    //}
-
-    //private void DeactiveAnimatedButton(AnimatedButton button)
-    //{
-    //    button.Button.GetComponent<Button>().interactable = false;
-    //}
-
     private IEnumerator DeactivateAfterAnimation(AnimatedButton animatedButton)
     {
         yield return new WaitForSeconds(animationDuration);
